@@ -1,90 +1,91 @@
 <template>
     <lightning-spinner  if:true={showSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
 
-    <lightning-card  if:false={showSpinner} title="Esprit Opportunities">
-    <template if:true={stageNameValues.data}>
-        <div class="aligndata">
-            <label class="custom-combobox-label slds-form-element__label slds-size_1-of-4">Please Select Stage :</label>
-            
-            <lightning-combobox   variant="label-hidden" class = "slds-size_1-of-4"  name='stageName' options={stageNameValues.data.values} onchange={onChangeInput} value={stageName}></lightning-combobox>
-
-        </div>
   
-</template>
-    <br/>
-    <table class="slds-table slds-table_cell-buffer slds-table_bordered " if:true={recordsToDisplay}>
-        <thead>
-        <tr class="slds-line-height_reset">
-            <th class="sticky-col" scope="col">
-                <div class="slds-truncate" title='Opportunity Name'>
-                     Select
-                </div>
-            </th>
-            <th class="sticky-col" scope="col">
-                <div class="slds-truncate" title='Opportunity Name'>
-                     Name
-                </div>
-            </th>
-            <th class="" scope="col">
-                <div class="slds-truncate" title='Opportunity Account'>
-                    Account
-                </div>
-            </th>
-            <th class="" scope="col">
-                <div class="slds-truncate " title='Opportunity StageName'>
-                    StageName
-                </div>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <template for:each={recordsToDisplay} for:index='index' for:item="opportunity">
-            <tr class="slds-hint-parent" key={opportunity.opportunityId}>
-                <td  class="sticky-col first-col">
-                    <lightning-input   data-key={index} data-id={opportunity.opportunityId} label="Red"
-                                     name="selectOpportunity" onchange={onChangeInput}
-                                     type="checkbox"
-                                     variant='label-hidden'></lightning-input>
-                </td>
-                <td data-key={index} data-label={opportunity.oppotunityName} >
-                    <div class="slds-truncate" title={opportunity.Name}>
-                        {opportunity.opportunityName}
-                    </div>
-                </td>
-                <td data-label={opportunity.Name}>
-                    <div class="slds-truncate" title={opportunity.oppotunityAccountName}>
-                        {opportunity.opportunityAccountName}
-                    </div>
-                </td>
-                <td data-label={opportunity.StageName}> 
-                    <div class="slds-truncate" title={opportunity.oppotunityAccountName}>
-                        {opportunity.opportunityStageName}
-                    </div>
-                </td>
-            </tr>
+    <lightning-card  if:false={showSpinner} title="Esprit Opportunities">
+        <!--picklist to show all stage-->
+        <template if:true={stageNameValues.data}>
+            <div class="aligndata">
+                <label class="custom-combobox-label slds-form-element__label slds-size_1-of-4">Please Select Stage :</label>
+                <lightning-combobox   variant="label-hidden" class = "slds-size_1-of-4"  name='stageName' options={stageNameValues.data.values} onchange={onChangeInput} value={stageName}></lightning-combobox>
+            </div>
         </template>
-        </tbody>
-    </table>
-    <br/>
-    <div class="slds-col">
-        <div class="slds-list_inline slds-p-bottom_xx-small aligndata" if:true={pageSizeOptions}>
-            <lightning-combobox  name='pageSize' label="Page Size" options={pageSizeOptions} onchange={onChangeInput} value={pageSize}></lightning-combobox>
+        <br/>
+        <!-- Table to display all opportunities -->
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered " if:true={recordsToDisplay}>
+            <thead>
+            <tr class="slds-line-height_reset">
+                <th class="sticky-col" scope="col">
+                    <div class="slds-truncate" title='Opportunity Name'>
+                        Select
+                    </div>
+                </th>
+                <th class="sticky-col" scope="col">
+                    <div class="slds-truncate" title='Opportunity Name'>
+                        Name
+                    </div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title='Opportunity Account'>
+                        Account
+                    </div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate " title='Opportunity StageName'>
+                        StageName
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <template for:each={recordsToDisplay} for:index='index' for:item="opportunity">
+                <tr class="slds-hint-parent" key={opportunity.opportunityId}>
+                    <td  class="sticky-col first-col">
+                        <lightning-input   data-key={index} data-id={opportunity.opportunityId} label="Red"
+                                        name="selectOpportunity" onchange={onChangeInput}
+                                        type="checkbox"
+                                        variant='label-hidden'></lightning-input>
+                    </td>
+                    <td data-key={index} data-label={opportunity.oppotunityName} >
+                        <div class="slds-truncate" title={opportunity.Name}>
+                            {opportunity.opportunityName}
+                        </div>
+                    </td>
+                    <td data-label={opportunity.Name}>
+                        <div class="slds-truncate" title={opportunity.oppotunityAccountName}>
+                            {opportunity.opportunityAccountName}
+                        </div>
+                    </td>
+                    <td data-label={opportunity.StageName}> 
+                        <div class="slds-truncate" title={opportunity.oppotunityAccountName}>
+                            {opportunity.opportunityStageName}
+                        </div>
+                    </td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+        <br/>
+        <div class="slds-col">
+            <div class="slds-list_inline slds-p-bottom_xx-small aligndata" if:true={pageSizeOptions}>
+                <lightning-combobox  name='pageSize' label="Page Size" options={pageSizeOptions} onchange={onChangeInput} value={pageSize}></lightning-combobox>
 
+            </div>
         </div>
-    </div>
-    <br/>
-    <div class="slds-align_absolute-center" style="height:5rem">
-        <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
-        <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
-        &nbsp;
-        <span class="slds-badge">{pageNumber} &nbsp;/&nbsp; {totalPages}</span>
-        &nbsp;
-        <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
-        <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
-    </div>
+        <br/>
+        <!--pagination-->
+        <div class="slds-align_absolute-center" style="height:5rem">
+            <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+            <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
+            &nbsp;
+            <span class="slds-badge">{pageNumber} &nbsp;/&nbsp; {totalPages}</span>
+            &nbsp;
+            <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+            <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+        </div>
+        <!-- update opp button-->
+        <lightning-button disabled={disableUpdateButton} variant="brand" label="Update Opportunities" title="Primary action with lighter look" onclick={onUpdateOpportunites} class="slds-align_absolute-center"></lightning-button>
 
-    <lightning-button disabled={disableUpdate} variant="brand" label="Update Opportunities" title="Primary action with lighter look" onclick={onUpdateOpportunites} class="slds-align_absolute-center"></lightning-button>
-
-
-</lightning-card>
+    </lightning-card>
+    
 </template>

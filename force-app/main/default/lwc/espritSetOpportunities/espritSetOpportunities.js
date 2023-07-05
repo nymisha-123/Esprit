@@ -22,7 +22,8 @@ export default class EspritSetOpportunities extends LightningElement {
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number    
     recordsToDisplay = [];
-    @track wiredOpportunityList = [];
+    @track wiredOpportunityList = []; 
+    disableUpdateButton = false;
 
     @wire(getObjectInfo,{objectApiName:OPPORTUNITY_OBJECT})
     opportunityInfo;
@@ -43,7 +44,7 @@ export default class EspritSetOpportunities extends LightningElement {
             this.pageSize = this.pageSizeOptions[0].value; //set pageSize with default value as first option
             this.paginationHelper();
         } else if (result.error) {
-            console.log('error',result.error);
+            console.error('error',result.error);
 
         }}
        
@@ -87,9 +88,6 @@ export default class EspritSetOpportunities extends LightningElement {
     @wire(getPicklistValues , {recordTypeId: '$opportunityInfo.data.defaultRecordTypeId',fieldApiName: STAGENAME_FIELD}) 
     stageNameValues;
 
-    get dataLoaded() {
-        return this.allOpportunities;
-    }
     get pageSizeSelected() {
         
         return this.pageSize;
@@ -101,6 +99,7 @@ export default class EspritSetOpportunities extends LightningElement {
         switch(name) {
             case 'stageName':
                 this.stageName = event.target.value;
+                this.disableUpdateButton = this.disableUpdate();
                 break;
 
             case 'selectOpportunity': 
@@ -114,6 +113,7 @@ export default class EspritSetOpportunities extends LightningElement {
                         this.listUpdateOpportunities.splice(index2, 1); // 2nd parameter means remove one item only
                         }
                 }
+                this.disableUpdateButton = this.disableUpdate();
                 break;
 
                 case 'pageSize':
@@ -156,11 +156,8 @@ export default class EspritSetOpportunities extends LightningElement {
         
         
     }
-    get disableUpdate() {
-        console.log('disable button'+this.listUpdateOpportunities.length);
+    disableUpdate() {
         return !this.stageName || this.listUpdateOpportunities.length === 0;
     }
-    
-
 
 }
