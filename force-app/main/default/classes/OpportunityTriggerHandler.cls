@@ -21,7 +21,7 @@ public class OpportunityTriggerHandler {
             // Assign task
             oppTask.WhatID  = newOpportunity.Id;
             oppTask.Ownerid  = newOpportunity.Ownerid;
-            oppTask.subject  = 'Validate Closed Opportunity';
+            oppTask.subject  = 'Validate '+newOpportunity.Name+' Closed Opportunity';
             oppTask.Status	= 'In Progress';
             oppTask.Description = 'Please Validate Your Closed Opportunity';
             oppTask.IsReminderSet = true;
