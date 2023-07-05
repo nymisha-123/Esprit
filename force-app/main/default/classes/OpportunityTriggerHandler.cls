@@ -29,8 +29,12 @@ public class OpportunityTriggerHandler {
             oppTask.Priority = 'Normal';
             tasksToCreate.add(oppTask);
         }
-        insert tasksToCreate;    
-        }
+            try{
+               insert tasksToCreate;    
+            } catch(exception e) {
+                throw new AuraHandledException(e.getMessage());
+            } 
+    	}
         //creates task for owner on closed won opportunities
         public void createTask(List<Opportunity> newOpps,Map<Id,Opportunity> oldOpps) {
             if(newOpps.size() > 0) {
