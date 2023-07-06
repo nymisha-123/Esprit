@@ -35,7 +35,7 @@ public class OpportunityTriggerHandler {
             try{
                insert tasksToCreate;    
             } catch(exception e) {
-                throw new AuraHandledException(e.getMessage());
+                System.debug('Exception while creating task'+e.getMessage());
             } 
     	}
         //creates task for owner on closed won opportunities
